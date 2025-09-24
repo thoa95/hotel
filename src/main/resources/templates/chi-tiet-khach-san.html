@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org" th:replace="~{layout/main :: layout(~{::title}, ~{::main})}">
+<head>
+    <title th:text="${khachSan.ten} + ' - Chi tiết Khách sạn'">Chi tiết Khách sạn</title>
+</head>
+<body>
+    <main>
+        <div class="container py-4">
+            <div class="row">
+                <!-- Sidebar -->
+                <div class="col-md-3">
+                    <div class="sticky-top" style="top: 20px;">
+                        <!-- Đặt ngay -->
+                        <div class="card mb-4 border-primary">
+                            <div class="card-body text-center">
+                                <button class="btn btn-primary btn-lg w-100" onclick="scrollToRooms()">
+                                    <i class="fas fa-calendar-check me-2"></i>Đặt ngay
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <!-- Thông tin thành phố -->
+                        <div class="card mb-4">
+                            <div class="position-relative">
+                                <img th:src="@{${khachSan.urlHinhAnhThanhPho}}" class="card-img-top" alt="Thành phố" style="height: 200px; object-fit: cover;">
+                                <div class="position-absolute bottom-0 start-0 p-3 text-white">
+                                    <h6 class="mb-0">Cách <span th:text="${khachSan.tenThanhPho}">thành phố</span> <span th:text="${khachSan.cachTrungTam}">0</span>m</h6>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <p class="card-text">Một trong những khu vực đẹp nhất ở <span th:text="${khachSan.tenThanhPho}">thành phố</span></p>
+                            </div>
+                        </div>
+                        
+                        <!-- Đánh giá -->
+                        <div class="card">
+                            <div class="card-body text-center">
+                                <div class="rating-stars fs-2" th:text="${khachSan.danhGia} + ' ★'">5 ★</div>
+                                <p class="fw-bold text-primary mb-0" th:text="${khachSan.danhGia == 0 ? 'Bình thường' : 
+                                       khachSan.danhGia == 1 ? 'Khá ổn' :
+                                       khachSan.danhGia == 2 ? 'Chất lượng' :
+                                       khachSan.danhGia == 3 ? 'Sang trọng' :
+                                       khachSan.danhGia == 4 ? 'Tuyệt vời' : 'Xuất sắc'}">Xuất sắc</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Nội dung chính -->
+                <div class="col-md-9">
+                    <!-- Header khách sạn -->
+                    <div class="d-flex justify-content-between align-items-start mb-4">
+                        <div>
+                            <h1 class="display-6 fw-bold" th:text="${khachSan.ten}">Tên khách sạn</h1>
+                            <p class="text-primary mb-2">
+                                <i class="fas fa-map-marker-alt me-2"></i>
+                                <span th:text="${khachSan.diaChi}">Địa chỉ</span>
+                            </p>
+                        </div>
+                        <button class="btn btn-primary" onclick="scrollToRooms()">
+                            <i class="fas fa-calendar-check me-2"></i>Đặt ngay
+                        </button>
+                    </div>
+                    
+                    <!-- Hình ảnh khách sạn -->
+                    <div class="card mb-4">
+                        <img th:src="@{'/images/KhachSan/' + ${khachSan.id} + '.jpg'}" 
+                             class="card-img-top" alt="Khách sạn" style="height: 400px; object-fit: cover;">
+                    </div>
+                    
+                    <!-- Thông tin khách sạn -->
+                    <div class="card mb-4">
+                        <div class="card-body">
+                            <div class="alert alert-warning" role="alert">
+                                <i class="fas fa-star me-2"></i>
+                                <strong>Một trong những chỗ nghỉ bán chạy nhất ở <span th:text="${khachSan.tenThanhPho}">thành phố</span> của chúng tôi!</strong>
+                            </div>
+                            
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <p><strong>Cách trung tâm:</strong> <span th:text="${khachSan.cachTrungTam}">0</span> m</p>
+                                    <p><strong>Loại khách sạn:</strong> <span th:text="${khachSan.tenLoaiKhachSan}">Loại</span></p>
+                                    <p><strong>Giáp biển:</strong> <span th:text="${khachSan.giapBien ? 'Có' : 'Không'}">Không</span></p>
+                                </div>
+                                <div class="col-md-6">
+                                    <p><strong>Số điện thoại:</strong> <span th:text="${khachSan.soDienThoai}">0123456789</span></p>
+                                    <p><strong>Đánh giá:</strong> 
+                                        <span class="rating-stars" th:text="${khachSan.danhGia} + ' ★'">5 ★</span>
+                                    </p>
+                                </div>
+                            </div>
+                            
+                            <div class="mt-3">
+                                <h5>Mô tả</h5>
+                                <p th:text="${khachSan.moTa}">Mô tả khách sạn</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Phòng trống -->
+                    <div id="phong-trong">
+                        <h3 class="mb-4">Phòng trống</h3>
+                        
+                        <!-- Form kiểm tra phòng trống -->
+                        <div class="card mb-4" style="background-color: var(--accent-color);">
+                            <div class="card-body">
+                                <h5 class="mb-3">Bạn muốn nghỉ tại <strong th:text="${khachSan.ten}">khách sạn</strong> vào lúc nào?</h5>
+                                <form th:action="@{/khach-san/{id}/phong-trong(id=${khachSan.id})}" method="get" class="row g-3">
+                                    <div class="col-md-4">
+                                        <label for="ngayDen" class="form-label fw-bold">Ngày nhận phòng</label>
+                                        <input type="date" class="form-control" id="ngayDen" name="ngayDen" 
+                                               th:value="${ngayDen}" th:min="${#temporals.format(#temporals.createNow(), 'yyyy-MM-dd')}" required>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <label for="ngayTra" class="form-label fw-bold">Ngày trả phòng</label>
+                                        <input type="date" class="form-control" id="ngayTra" name="ngayTra" 
+                                               th:value="${ngayTra}" th:min="${#temporals.format(#temporals.createNow(), 'yyyy-MM-dd')}" required>
+                                    </div>
+                                    <div class="col-md-4 d-flex align-items-end">
+                                        <button type="submit" class="btn btn-dark w-100">
+                                            <i class="fas fa-search me-2"></i>Kiểm tra phòng trống
+                                        </button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                        
+                        <!-- Danh sách phòng -->
+                        <div class="card" th:if="${danhSachPhong != null and !danhSachPhong.empty}">
+                            <div class="card-body">
+                                <div class="table-responsive">
+                                    <table class="table table-hover">
+                                        <thead class="table-primary">
+                                            <tr>
+                                                <th>Phù hợp cho</th>
+                                                <th>Loại phòng</th>
+                                                <th>Giá</th>
+                                                <th></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr th:each="phong : ${danhSachPhong}">
+                                                <td class="text-center">
+                                                    <i class="fas fa-bed fa-2x text-primary"></i>
+                                                    <br>
+                                                    <small th:text="${phong.loaiGiuong + 1} + ' người'">1 người</small>
+                                                </td>
+                                                <td>
+                                                    <h6 class="text-primary fw-bold" th:text="${phong.ten}">Tên phòng</h6>
+                                                    <p class="mb-1"><span th:text="${phong.dienTich}">0</span> m²</p>
+                                                    <p class="mb-1 text-muted" th:text="${phong.tienNghi}">Tiện nghi</p>
+                                                    <small class="text-muted" th:text="${phong.moTa}">Mô tả</small>
+                                                </td>
+                                                <td class="text-center">
+                                                    <h5 class="text-success fw-bold">
+                                                        <span th:text="${#numbers.formatInteger(phong.giaThue, 0, 'COMMA')}">0</span>,000 VND
+                                                    </h5>
+                                                    <small class="text-muted">/đêm</small>
+                                                </td>
+                                                <td class="text-center">
+                                                    <button class="btn btn-primary" 
+                                                            th:if="${daKiemTraPhongTrong}"
+                                                            onclick="openBookingModal(this)"
+                                                            th:data-phong-id="${phong.id}"
+                                                            th:data-phong-ten="${phong.ten}"
+                                                            th:data-phong-gia="${phong.giaThue}">
+                                                        <i class="fas fa-calendar-plus me-1"></i>Đặt Phòng
+                                                    </button>
+                                                    <span class="text-muted" th:unless="${daKiemTraPhongTrong}">
+                                                        Vui lòng kiểm tra phòng trống
+                                                    </span>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="text-center py-5" th:if="${danhSachPhong == null or danhSachPhong.empty}">
+                            <i class="fas fa-bed fa-3x text-muted mb-3"></i>
+                            <h4 class="text-muted">Không có phòng trống</h4>
+                            <p class="text-muted">Vui lòng thử lại với ngày khác</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+    
+    <script>
+        function scrollToRooms() {
+            document.getElementById('phong-trong').scrollIntoView({ behavior: 'smooth' });
+        }
+        
+        function openBookingModal(button) {
+            // Implement booking modal functionality
+            const phongId = button.getAttribute('data-phong-id');
+            const phongTen = button.getAttribute('data-phong-ten');
+            const phongGia = button.getAttribute('data-phong-gia');
+            
+            alert('Đặt phòng: ' + phongTen + ' - Giá: ' + phongGia + ',000 VND');
+            // TODO: Implement actual booking functionality
+        }
+    </script>
+</body>
+</html>

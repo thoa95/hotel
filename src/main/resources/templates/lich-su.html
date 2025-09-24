@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org" th:replace="~{layout/main :: layout(~{::title}, ~{::main})}">
+<head>
+    <title>Lịch sử đặt phòng - Quản Lý Khách Sạn</title>
+</head>
+<body>
+    <main>
+        <div class="container py-4">
+            <h2 class="text-center mb-4">Lịch Sử Đặt Phòng</h2>
+            
+            <div class="row">
+                <!-- Sidebar -->
+                <div class="col-md-3">
+                    <div class="card">
+                        <div class="card-header">
+                            <h5 class="mb-0"><i class="fas fa-list me-2"></i>Danh Mục</h5>
+                        </div>
+                        <div class="list-group list-group-flush">
+                            <a th:href="@{/ca-nhan}" class="list-group-item list-group-item-action">
+                                <i class="fas fa-user me-2"></i>Trang Cá Nhân
+                            </a>
+                            <a th:href="@{/ca-nhan/lich-su}" class="list-group-item list-group-item-action active">
+                                <i class="fas fa-history me-2"></i>Lịch Sử
+                            </a>
+                            <a href="#" class="list-group-item list-group-item-action">
+                                <i class="fas fa-paper-plane me-2"></i>Gửi Báo Cáo
+                            </a>
+                            <a href="#" class="list-group-item list-group-item-action">
+                                <i class="fas fa-share-alt me-2"></i>Chia Sẻ
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Danh sách lịch sử -->
+                <div class="col-md-9">
+                    <div th:if="${lichSuDatPhong != null and !lichSuDatPhong.empty}">
+                        <div class="card mb-4" th:each="datPhong : ${lichSuDatPhong}">
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-md-9">
+                                        <h5 class="card-title">
+                                            <span class="text-success" th:text="${datPhong.tenPhong}">Tên phòng</span> - 
+                                            <a th:href="@{/khach-san/{id}(id=${datPhong.phong.khachSan.id})}" 
+                                               class="text-primary text-decoration-none" th:text="${datPhong.phong.khachSan.ten}">Khách sạn</a>
+                                        </h5>
+                                        
+                                        <p class="mb-2">
+                                            <strong>Ngày đặt:</strong> 
+                                            <span th:text="${#temporals.format(datPhong.ngayDat, 'dd-MM-yyyy')}">01-01-2025</span>
+                                        </p>
+                                        
+                                        <p class="mb-2">
+                                            Đặt từ <strong class="text-primary" th:text="${#temporals.format(datPhong.ngayDen, 'dd-MM-yyyy')}">01-01-2025</strong> 
+                                            đến <strong class="text-warning" th:text="${#temporals.format(datPhong.ngayTra, 'dd-MM-yyyy')}">02-01-2025</strong>
+                                        </p>
+                                        
+                                        <p class="mb-2" th:if="${datPhong.dichVu != null and !datPhong.dichVu.empty}">
+                                            <strong>Dịch vụ:</strong> <span th:text="${datPhong.dichVu}">Dịch vụ</span>
+                                        </p>
+                                        
+                                        <p class="mb-2">
+                                            <strong>Tổng tiền:</strong> 
+                                            <span class="text-danger fw-bold" th:text="${#numbers.formatInteger(datPhong.thanhTien * 1000, 0, 'COMMA')} + ' VND'">0 VND</span>
+                                        </p>
+                                        
+                                        <p class="mb-0" th:if="${datPhong.ghiChu != null and !datPhong.ghiChu.empty}">
+                                            <strong>Ghi chú:</strong> <span th:text="${datPhong.ghiChu}">Ghi chú</span>
+                                        </p>
+                                    </div>
+                                    
+                                    <div class="col-md-3 text-end">
+                                        <!-- Có thể hủy -->
+                                        <div th:if="${!datPhong.daHuy and datPhong.ngayDen.isAfter(#temporals.createToday())}">
+                                            <form th:action="@{/ca-nhan/huy-dat-phong/{id}(id=${datPhong.id})}" method="post" 
+                                                  onsubmit="return confirm('Bạn có chắc chắn muốn hủy đặt phòng này không?')">
+                                                <button type="submit" class="btn btn-outline-danger">
+                                                    <i class="fas fa-times me-1"></i>Hủy Đặt
+                                                </button>
+                                            </form>
+                                        </div>
+                                        
+                                        <!-- Quá hạn -->
+                                        <div th:if="${!datPhong.daHuy and datPhong.ngayDen.isBefore(#temporals.createToday())}">
+                                            <button class="btn btn-danger" disabled>
+                                                <i class="fas fa-clock me-1"></i>Quá Hạn
+                                            </button>
+                                        </div>
+                                        
+                                        <!-- Đã hủy -->
+                                        <div th:if="${datPhong.daHuy}">
+                                            <button class="btn btn-success" disabled>
+                                                <i class="fas fa-check me-1"></i>Đã Hủy
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="text-center py-5" th:if="${lichSuDatPhong == null or lichSuDatPhong.empty}">
+                        <i class="fas fa-calendar-times fa-3x text-muted mb-3"></i>
+                        <h4 class="text-muted">Bạn chưa đặt phòng nào!</h4>
+                        <p class="text-muted">Hãy khám phá các khách sạn tuyệt vời của chúng tôi</p>
+                        <a th:href="@{/khach-san}" class="btn btn-primary">
+                            <i class="fas fa-search me-2"></i>Tìm khách sạn
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+</body>
+</html>

@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org" th:replace="~{layout/main :: layout(~{::title}, ~{::main})}">
+<head>
+    <title>Trang cá nhân - Quản Lý Khách Sạn</title>
+</head>
+<body>
+    <main>
+        <div class="container py-4">
+            <h2 class="text-center mb-4">Trang Cá Nhân</h2>
+            
+            <div class="row">
+                <!-- Sidebar -->
+                <div class="col-md-3">
+                    <div class="card mb-4">
+                        <div class="card-header">
+                            <h5 class="mb-0"><i class="fas fa-list me-2"></i>Danh Mục</h5>
+                        </div>
+                        <div class="list-group list-group-flush">
+                            <a th:href="@{/ca-nhan}" class="list-group-item list-group-item-action">
+                                <i class="fas fa-user me-2"></i>Trang Cá Nhân
+                            </a>
+                            <a th:href="@{/ca-nhan/lich-su}" class="list-group-item list-group-item-action">
+                                <i class="fas fa-history me-2"></i>Lịch Sử
+                            </a>
+                            <a href="#" class="list-group-item list-group-item-action">
+                                <i class="fas fa-paper-plane me-2"></i>Gửi Báo Cáo
+                            </a>
+                            <a href="#" class="list-group-item list-group-item-action">
+                                <i class="fas fa-share-alt me-2"></i>Chia Sẻ
+                            </a>
+                        </div>
+                    </div>
+                    
+                    <!-- Khách sạn gợi ý -->
+                    <div class="card" th:if="${khachSanGoiY != null}">
+                        <div class="card-header">
+                            <h6 class="mb-0 text-primary"><i class="fas fa-star me-2"></i>Gợi ý cho bạn</h6>
+                        </div>
+                        <div class="position-relative">
+                            <img th:src="@{'/images/KhachSan/' + ${khachSanGoiY.id} + '.jpg'}" 
+                                 class="card-img-top" alt="Khách sạn gợi ý" style="height: 200px; object-fit: cover;">
+                            <div class="position-absolute bottom-0 start-0 p-3 text-white">
+                                <h6 class="mb-0" th:text="${khachSanGoiY.ten}">Khách sạn</h6>
+                            </div>
+                        </div>
+                        <div class="card-body text-center">
+                            <p class="card-text">Một trong những khách sạn tuyệt vời nhất của chúng tôi!</p>
+                            <a th:href="@{/khach-san/{id}(id=${khachSanGoiY.id})}" class="btn btn-primary">
+                                <i class="fas fa-calendar-check me-2"></i>Đặt ngay
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Nội dung chính -->
+                <div class="col-md-9">
+                    <div class="card">
+                        <div class="card-header bg-warning">
+                            <h5 class="mb-0">
+                                <span th:text="${session.taiKhoan.hoTen}">Người dùng</span>, 
+                                bạn có thể chỉnh sửa thông tin cá nhân của mình ở đây!
+                            </h5>
+                        </div>
+                        <div class="card-body">
+                            <form th:action="@{/ca-nhan/cap-nhat}" method="post" th:object="${taiKhoan}">
+                                <div class="row">
+                                    <div class="col-md-6 mb-3">
+                                        <label for="tenTaiKhoan" class="form-label">Tên tài khoản</label>
+                                        <input type="text" class="form-control" id="tenTaiKhoan" th:field="*{tenTaiKhoan}" readonly>
+                                    </div>
+                                    
+                                    <div class="col-md-6 mb-3">
+                                        <label for="hoTen" class="form-label">Họ tên</label>
+                                        <input type="text" class="form-control" id="hoTen" th:field="*{hoTen}" 
+                                               placeholder="Nhập họ tên...">
+                                        <div class="text-danger" th:if="${#fields.hasErrors('hoTen')}" th:errors="*{hoTen}"></div>
+                                    </div>
+                                </div>
+                                
+                                <div class="row">
+                                    <div class="col-md-6 mb-3">
+                                        <label for="matKhau" class="form-label">Mật khẩu</label>
+                                        <input type="password" class="form-control" id="matKhau" th:field="*{matKhau}" 
+                                               placeholder="Nhập mật khẩu...">
+                                        <div class="text-danger" th:if="${#fields.hasErrors('matKhau')}" th:errors="*{matKhau}"></div>
+                                    </div>
+                                    
+                                    <div class="col-md-6 mb-3">
+                                        <label for="nhapLaiMatKhau" class="form-label">Nhập lại mật khẩu</label>
+                                        <input type="password" class="form-control" id="nhapLaiMatKhau" name="nhapLaiMatKhau" 
+                                               placeholder="Nhập lại mật khẩu...">
+                                    </div>
+                                </div>
+                                
+                                <div class="row">
+                                    <div class="col-md-6 mb-3">
+                                        <label for="email" class="form-label">Email</label>
+                                        <input type="email" class="form-control" id="email" th:field="*{email}" 
+                                               placeholder="Nhập email...">
+                                        <div class="text-danger" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></div>
+                                    </div>
+                                    
+                                    <div class="col-md-6 mb-3">
+                                        <label for="soDienThoai" class="form-label">Số điện thoại</label>
+                                        <input type="tel" class="form-control" id="soDienThoai" th:field="*{soDienThoai}" 
+                                               placeholder="Nhập số điện thoại...">
+                                        <div class="text-danger" th:if="${#fields.hasErrors('soDienThoai')}" th:errors="*{soDienThoai}"></div>
+                                    </div>
+                                </div>
+                                
+                                <div class="mb-4">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" id="gioiTinh" th:field="*{gioiTinh}">
+                                        <label class="form-check-label" for="gioiTinh">
+                                            Giới tính Nam
+                                        </label>
+                                    </div>
+                                </div>
+                                
+                                <button type="submit" class="btn btn-primary">
+                                    <i class="fas fa-save me-2"></i>Cập Nhật Thông Tin
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+</body>
+</html>
