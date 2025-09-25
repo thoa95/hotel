@@ -11,7 +11,7 @@
                 <h1 class="display-4 fw-bold mb-4">Tìm kiếm ưu đãi khách sạn, chỗ nghỉ...</h1>
                 <p class="lead mb-4">Từ những khu nghỉ dưỡng thanh bình đến những căn hộ hạng sang hiện đại</p>
                 
-                <div class="search-box">
+                <div class="search-box" style="background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(10px);">
                     <form th:action="@{/tim-kiem}" method="post" class="row g-3 align-items-end">
                         <div class="col-md-8">
                             <label for="tenThanhPho" class="form-label fw-bold">Điểm đến</label>
@@ -71,7 +71,7 @@
         </section>
         
         <!-- Loại khách sạn -->
-        <section class="py-5 bg-light">
+        <section class="py-5" style="background: linear-gradient(135deg, #FFF8DC, #F5DEB3);">
             <div class="container">
                 <h2 class="text-center mb-5">Tìm theo Loại khách sạn</h2>
                 <div class="row">

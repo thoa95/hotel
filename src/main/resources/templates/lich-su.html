@@ -11,7 +11,7 @@
             <div class="row">
                 <!-- Sidebar -->
                 <div class="col-md-3">
-                    <div class="card">
+                    <div class="card" style="background: rgba(255, 248, 220, 0.9); border: 1px solid #D2691E;">
                         <div class="card-header">
                             <h5 class="mb-0"><i class="fas fa-list me-2"></i>Danh Mục</h5>
                         </div>
@@ -35,7 +35,7 @@
                 <!-- Danh sách lịch sử -->
                 <div class="col-md-9">
                     <div th:if="${lichSuDatPhong != null and !lichSuDatPhong.empty}">
-                        <div class="card mb-4" th:each="datPhong : ${lichSuDatPhong}">
+                        <div class="card mb-4" th:each="datPhong : ${lichSuDatPhong}" style="background: rgba(255, 255, 255, 0.95); border: 1px solid #D2691E;">
                             <div class="card-body">
                                 <div class="row">
                                     <div class="col-md-9">

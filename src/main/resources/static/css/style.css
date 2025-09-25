@@ -1,19 +1,22 @@
 /* Custom styles for Hotel Management System */
 
 :root {
-    --primary-color: #003580;
-    --secondary-color: #0077CC;
-    --accent-color: #FEBB02;
+    --primary-color: #D2691E;
+    --secondary-color: #FF6347;
+    --accent-color: #FFD700;
     --success-color: #28a745;
     --danger-color: #dc3545;
     --warning-color: #ffc107;
-    --light-blue: #E9F0FA;
+    --light-warm: #FFF8DC;
     --border-color: #c0c0c0;
+    --warm-gradient-start: #FF8C69;
+    --warm-gradient-end: #D2691E;
 }
 
 body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     line-height: 1.6;
+    background-color: #FFF8DC;
 }
 
 /* Navigation */
@@ -28,18 +31,18 @@ body {
 }
 
 .navbar-nav .nav-link:hover {
-    color: var(--accent-color) !important;
+    color: #FFD700 !important;
 }
 
 .navbar-nav .nav-link.active {
     color: white !important;
-    background-color: rgba(255, 255, 255, 0.1);
+    background-color: rgba(255, 215, 0, 0.2);
     border-radius: 5px;
 }
 
 /* Hero Section */
 .hero-section {
-    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+    background: linear-gradient(135deg, var(--warm-gradient-start), var(--warm-gradient-end));
     color: white;
     padding: 80px 0;
     position: relative;
@@ -117,7 +120,7 @@ body {
 
 /* Tables */
 .table-hover tbody tr:hover {
-    background-color: var(--light-blue);
+    background-color: var(--light-warm);
 }
 
 /* Alerts */
@@ -129,19 +132,19 @@ body {
 
 /* Footer */
 .footer {
-    background: linear-gradient(135deg, var(--primary-color), #001a4d);
+    background: linear-gradient(135deg, var(--primary-color), #8B4513);
     color: white;
     padding: 50px 0 30px;
     margin-top: 80px;
 }
 
 .footer a {
-    color: #ccd6e5;
+    color: #F5DEB3;
     transition: color 0.3s ease;
 }
 
 .footer a:hover {
-    color: white;
+    color: #FFD700;
 }
 
 /* Responsive */

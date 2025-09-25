@@ -102,7 +102,7 @@
                         <h3 class="mb-4">Phòng trống</h3>
                         
                         <!-- Form kiểm tra phòng trống -->
-                        <div class="card mb-4" style="background-color: var(--accent-color);">
+                        <div class="card mb-4" style="background: linear-gradient(135deg, #FFD700, #FFA500); color: #8B4513;">
                             <div class="card-body">
                                 <h5 class="mb-3">Bạn muốn nghỉ tại <strong th:text="${khachSan.ten}">khách sạn</strong> vào lúc nào?</h5>
                                 <form th:action="@{/khach-san/{id}/phong-trong(id=${khachSan.id})}" method="get" class="row g-3">
@@ -117,7 +117,7 @@
                                                th:value="${ngayTra}" th:min="${#temporals.format(#temporals.createNow(), 'yyyy-MM-dd')}" required>
                                     </div>
                                     <div class="col-md-4 d-flex align-items-end">
-                                        <button type="submit" class="btn btn-dark w-100">
+                                        <button type="submit" class="btn w-100" style="background: #8B4513; color: white; border: none;">
                                             <i class="fas fa-search me-2"></i>Kiểm tra phòng trống
                                         </button>
                                     </div>
