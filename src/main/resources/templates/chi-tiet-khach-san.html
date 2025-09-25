@@ -160,10 +160,8 @@
                                                 <td class="text-center">
                                                     <button class="btn btn-primary" 
                                                             th:if="${daKiemTraPhongTrong}"
-                                                            onclick="openBookingModal(this)"
-                                                            th:data-phong-id="${phong.id}"
-                                                            th:data-phong-ten="${phong.ten}"
-                                                            th:data-phong-gia="${phong.giaThue}">
+                                                            onclick="bookRoom(this)"
+                                                            th:data-phong-id="${phong.id}">
                                                         <i class="fas fa-calendar-plus me-1"></i>Đặt Phòng
                                                     </button>
                                                     <span class="text-muted" th:unless="${daKiemTraPhongTrong}">
@@ -193,14 +191,19 @@
             document.getElementById('phong-trong').scrollIntoView({ behavior: 'smooth' });
         }
         
-        function openBookingModal(button) {
-            // Implement booking modal functionality
+        function bookRoom(button) {
             const phongId = button.getAttribute('data-phong-id');
-            const phongTen = button.getAttribute('data-phong-ten');
-            const phongGia = button.getAttribute('data-phong-gia');
+            const ngayDen = document.getElementById('ngayDen').value;
+            const ngayTra = document.getElementById('ngayTra').value;
             
-            alert('Đặt phòng: ' + phongTen + ' - Giá: ' + phongGia + ',000 VND');
-            // TODO: Implement actual booking functionality
+            if (!ngayDen || !ngayTra) {
+                alert('Vui lòng chọn ngày nhận và trả phòng!');
+                return;
+            }
+            
+            if (confirm('Bạn có chắc chắn muốn đặt phòng này không?')) {
+                window.location.href = `/dat-phong/${phongId}?ngayDen=${ngayDen}&ngayTra=${ngayTra}`;
+            }
         }
     </script>
 </body>
