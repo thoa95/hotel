@@ -1,22 +1,27 @@
 /* Custom styles for Hotel Management System */
 
 :root {
-    --primary-color: #D2691E;
-    --secondary-color: #FF6347;
-    --accent-color: #FFD700;
+    --primary-color: #2563eb;
+    --secondary-color: #1e40af;
+    --accent-color: #3b82f6;
     --success-color: #28a745;
     --danger-color: #dc3545;
     --warning-color: #ffc107;
-    --light-warm: #FFF8DC;
-    --border-color: #c0c0c0;
-    --warm-gradient-start: #FF8C69;
-    --warm-gradient-end: #D2691E;
+    --light-warm: #f8fafc;
+    --border-color: #e2e8f0;
+    --warm-gradient-start: #3b82f6;
+    --warm-gradient-end: #1e40af;
+    --dark-bg: #1e293b;
+    --card-bg: #ffffff;
+    --text-primary: #1e293b;
+    --text-secondary: #64748b;
 }
 
 body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     line-height: 1.6;
-    background-color: #FFF8DC;
+    background-color: #f8fafc;
+    color: var(--text-primary);
 }
 
 /* Navigation */
@@ -31,18 +36,18 @@ body {
 }
 
 .navbar-nav .nav-link:hover {
-    color: #FFD700 !important;
+    color: #60a5fa !important;
 }
 
 .navbar-nav .nav-link.active {
     color: white !important;
-    background-color: rgba(255, 215, 0, 0.2);
+    background-color: rgba(59, 130, 246, 0.2);
     border-radius: 5px;
 }
 
 /* Hero Section */
 .hero-section {
-    background: linear-gradient(135deg, var(--warm-gradient-start), var(--warm-gradient-end));
+    background: linear-gradient(135deg, #1e40af, #3730a3);
     color: white;
     padding: 80px 0;
     position: relative;
@@ -64,7 +69,7 @@ body {
     background: white;
     border-radius: 15px;
     padding: 30px;
-    box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+    box-shadow: 0 20px 40px rgba(30, 64, 175, 0.1);
     margin-top: 30px;
     position: relative;
     z-index: 1;
@@ -74,12 +79,13 @@ body {
 .card-hover {
     transition: all 0.3s ease;
     border: none;
-    box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+    box-shadow: 0 5px 15px rgba(30, 64, 175, 0.08);
+    background: var(--card-bg);
 }
 
 .card-hover:hover {
     transform: translateY(-8px);
-    box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+    box-shadow: 0 20px 40px rgba(30, 64, 175, 0.15);
 }
 
 /* Buttons */
@@ -90,32 +96,34 @@ body {
 }
 
 .btn-primary {
-    background: linear-gradient(135deg, var(--secondary-color), var(--primary-color));
+    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
     border: none;
+    color: white;
 }
 
 .btn-primary:hover {
-    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+    background: linear-gradient(135deg, var(--secondary-color), #1d4ed8);
     transform: translateY(-2px);
-    box-shadow: 0 5px 15px rgba(0,119,204,0.3);
+    box-shadow: 0 5px 15px rgba(37, 99, 235, 0.3);
 }
 
 /* Rating Stars */
 .rating-stars {
-    color: var(--accent-color);
+    color: #fbbf24;
     text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
 }
 
 /* Forms */
 .form-control {
     border-radius: 8px;
-    border: 2px solid #e9ecef;
+    border: 2px solid var(--border-color);
     transition: all 0.3s ease;
+    background: white;
 }
 
 .form-control:focus {
-    border-color: var(--secondary-color);
-    box-shadow: 0 0 0 0.2rem rgba(0,119,204,0.25);
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 0.2rem rgba(37, 99, 235, 0.25);
 }
 
 /* Tables */
@@ -127,24 +135,47 @@ body {
 .alert {
     border-radius: 10px;
     border: none;
-    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    box-shadow: 0 5px 15px rgba(30, 64, 175, 0.1);
 }
 
 /* Footer */
 .footer {
-    background: linear-gradient(135deg, var(--primary-color), #8B4513);
+    background: linear-gradient(135deg, var(--dark-bg), #0f172a);
     color: white;
     padding: 50px 0 30px;
     margin-top: 80px;
 }
 
 .footer a {
-    color: #F5DEB3;
+    color: #cbd5e1;
     transition: color 0.3s ease;
 }
 
 .footer a:hover {
-    color: #FFD700;
+    color: #60a5fa;
+}
+
+/* Cards with modern styling */
+.card {
+    background: var(--card-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.card-header {
+    background: linear-gradient(135deg, #f1f5f9, #e2e8f0);
+    border-bottom: 1px solid var(--border-color);
+    color: var(--text-primary);
+}
+
+/* Text colors */
+.text-primary {
+    color: var(--primary-color) !important;
+}
+
+.text-secondary {
+    color: var(--text-secondary) !important;
 }
 
 /* Responsive */
